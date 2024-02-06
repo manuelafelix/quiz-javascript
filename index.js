@@ -95,6 +95,14 @@ const perguntas = [
 const quiz = document.querySelector('#quiz');
 const template = document.querySelector('template');
 
+// coleção de valores 
+const corretas = new Set();
+
+const totalDePerguntas = perguntas.length;
+ 
+const mostrarTotal = document.querySelector('#acertos span');
+mostrarTotal.textContent = `${corretas.size} de ${totalDePerguntas}`;
+
 // laço de repetição para os itens do quiz 
 for (const item of perguntas) {
   // clona todos os nós dentro de template (incluindo os filhos da div)
@@ -107,10 +115,29 @@ for (const item of perguntas) {
     const dt = quizItem.querySelector('dl dt').cloneNode(true);
     dt.querySelector('span').textContent = resposta;
 
+    // adiciona o atributo name passando "pergunta" concatenada com o index do item 
+    dt.querySelector('input').setAttribute('name', 'pergunta-' + perguntas.indexOf(item));
+    // atribui o value de cada alternativa passando o index da resposta 
+    dt.querySelector('input').value = item.respostas.indexOf(resposta);
+    // executa uma função quando houver mudança no input 
+    dt.querySelector('input').onchange = (event) => {
+      // verifica se a alternativa marcada é a correta através do valor do input
+      const estaCorreta = event.target.value == item.correta; // retorna true ou false
+      // caso a resposta for alterada e estaCorreta for false, remove o item adicionado, anteriormente 
+      corretas.delete(item)
+      if (estaCorreta) {
+        // se a resposta estiver correta, adiciona o item a const corretas
+        corretas.add(item);
+      }
+      // altera o valor de acertos (ou não) quando houver mudança no input
+      mostrarTotal.textContent = `${corretas.size} de ${totalDePerguntas}`;
+    }
+
+
     // seleciona o description list e adiciona dt como filho
     quizItem.querySelector('dl').appendChild(dt);
   }
-  // remove o elemento dt da página, já que foi feita uma cópia e adicionada a description list, anteriormente 
+  // remove o elemento dt do DOM, pois já foi feita uma cópia dele para ser utilizada 
   quizItem.querySelector('dl dt').remove();
   
   quiz.appendChild(quizItem);
