@@ -1,17 +1,11 @@
 # Anotações
 
-```js
-const mensagem = "Bom te ver aqui! ";
-
-alert(mensagem + (10 * 100) + " abraços");
-// Bom te ver aqui! 1000 abraços
-```
-
 ### HTML
 - ```<template>```: engloba um conteúdo que ficará escondido quando a página carregar
 - ```<dl>```: uma lista de descrições, com termos (dt) e descrições (dd)
 
 ### CSS
+- `counter()`: são tipo "variáveis" que podem ter seu valor incrementado, a partir de regras de CSS (que vai contando a quantidade de vezes que ele é usado). 
 
 ### JavaScript
 - ```new Set()```: coleção de valores exclusivos, de qualquer tipo. Cada valor só pode aparecer uma vez no Conjunto (Set).
